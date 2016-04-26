@@ -767,7 +767,14 @@ void* CDFAlign::ThreadFunc_cuAlign(void* p)
 	//calculate middle frame shift
 	complex<double> midshift=0.0;
 	int RefFrame=0;
-	if(para.bAlignToMid==1) RefFrame=nz/2+1;
+	if(para.bAlignToMid==1) {
+        if(para.nStart > 0 || para.nEnd > 0) {
+                RefFrame = para.nStart + (para.nEnd - para.nStart) / 2;
+        }
+        else {
+                RefFrame=nz/2+1;
+        }
+	}
 	if(para.bAlignToMid<=0) RefFrame=abs(para.bAlignToMid);
 	if(para.bAlignToMid!=0) 
 	{
